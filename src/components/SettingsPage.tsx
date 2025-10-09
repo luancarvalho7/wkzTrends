@@ -229,7 +229,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 <textarea
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-white focus:outline-none resize-none mt-1"
+                  className="w-full bg-transparent text-black focus:outline-none resize-none mt-1"
                   rows={4}
                   autoFocus
                 />
@@ -238,7 +238,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   type="text"
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-white focus:outline-none mt-1"
+                  className="w-full bg-transparent text-black focus:outline-none mt-1"
                   autoFocus
                 />
               )}
@@ -247,14 +247,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               )}
             </div>
           ) : (
-            <div className="text-white mt-1">
+            <div className="text-black mt-1">
               {field.value || <span className="text-gray-500">Not set</span>}
             </div>
           )}
         </div>
         <button
           onClick={() => field.isEditing ? handleSaveField(fieldKey) : toggleEdit(fieldKey)}
-          className="ml-4 text-gray-400 hover:text-white transition-colors"
+          className="ml-4 text-gray-400 hover:text-black transition-colors"
         >
           {field.isEditing ? (
             <Check className="w-4 h-4" />
@@ -313,7 +313,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="fixed top-4 right-4 bg-gray-900 text-white px-6 py-4 rounded-lg shadow-lg z-50"
+              className="fixed top-4 right-4 bg-gray-900 text-black px-6 py-4 rounded-lg shadow-lg z-50"
             >
               You'll be able to purchase it soon...
             </motion.div>
