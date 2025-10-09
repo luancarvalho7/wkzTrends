@@ -47,6 +47,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             src="https://cdn.prod.website-files.com/665825f3f5168cb68f2c36e1/6662ca6f1be62e26c76ef652_workezLogoWebp.webp"
             alt="Workez Logo"
             className="h-8 mx-auto mb-6"
+            style={{ filter: 'invert(1)' }}
           />
           <h1 className="text-2xl font-bold text-black">Work Smarter, not Harder!</h1>
           <p className="text-black mt-2">Sign in to your account</p>
