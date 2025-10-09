@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Play, Trophy, Medal, Award, ExternalLink } from 'lucide-react';
+import { Heart, Play, Trophy, Medal, Award, ExternalLink, Star } from 'lucide-react';
 import { Post } from '../types';
 import { formatNumber } from '../utils/formatters';
 
@@ -11,7 +11,7 @@ interface PostCardProps {
   onAIClick: () => void;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post, index }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, index, onAIClick }) => {
   const formatTimeAgo = (timestamp: number) => {
     const now = Math.floor(Date.now() / 1000);
     const diff = now - timestamp;
@@ -82,6 +82,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, index }) => {
         >
           <ExternalLink className="w-4 h-4" />
           <span>See Content</span>
+        </button>
+        <button
+          onClick={onAIClick}
+          className="absolute top-3 left-3 z-50 bg-gradient-to-r from-purple-500 to-blue-500 text-white p-2 rounded-full shadow-lg hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-105"
+          title="AI Analysis"
+        >
+          <Star className="w-4 h-4 fill-white" />
         </button>
         <div className="absolute bottom-4 right-4 z-50 bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm flex items-center space-x-2">
           {getRankIcon(index)}
