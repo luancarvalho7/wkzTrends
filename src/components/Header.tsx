@@ -25,6 +25,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, activeSort, onSortChange }) =
             src="https://cdn.prod.website-files.com/665825f3f5168cb68f2c36e1/6662ca6f1be62e26c76ef652_workezLogoWebp.webp"
             alt="Workez Logo"
             className="h-5"
+            style={{ filter: 'invert(1)' }}
           />
           </motion.div>
           
