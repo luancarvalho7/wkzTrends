@@ -9,6 +9,8 @@ interface EditableField {
   value: string;
   isEditing: boolean;
   apiField: string;
+  isTextArea?: boolean;
+  isArray?: boolean;
   validate?: (value: string) => string | null;
 }
 
@@ -33,6 +35,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   const [currentNicheId, setCurrentNicheId] = useState<string>('');
   const [nicheSearch, setNicheSearch] = useState('');
   const [expandedSection, setExpandedSection] = useState<'business' | 'personal' | null>(null);
+  const [expandedSystemSection, setExpandedSystemSection] = useState(false);
   const [userSettings, setUserSettings] = useState<UserSettings | null>(null);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +43,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [fields, setFields] = useState<Record<string, EditableField>>({
     businessName: { 
-      name: 'Business Name', 
+      name: 'Nome da Empresa', 
       value: '', 
       isEditing: false,
       apiField: 'business_name'
@@ -52,11 +55,25 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
       apiField: 'business_instagram_username'
     },
     website: { 
-      name: 'Website', 
+      name: 'Site', 
       value: '', 
       isEditing: false,
       apiField: 'business_website',
       validate: validateUrl
+    },
+    toneOfVoice: {
+      name: 'Tom de voz',
+      value: '',
+      isEditing: false,
+      apiField: 'tone_of_voice',
+      isTextArea: true
+    },
+    monitoredAccounts: {
+      name: 'Contas monitoradas',
+      value: '',
+      isEditing: false,
+      apiField: 'monitored_accounts',
+      isArray: true
     },
   });
 
@@ -76,7 +93,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
       
       setFields({
         businessName: { 
-          name: 'Business Name', 
+          name: 'Nome da Empresa', 
           value: settings.business_name || '', 
           isEditing: false,
           apiField: 'business_name'
@@ -88,11 +105,25 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           apiField: 'business_instagram_username'
         },
         website: { 
-          name: 'Website', 
+          name: 'Site', 
           value: settings.business_website || '', 
           isEditing: false,
           apiField: 'business_website',
           validate: validateUrl
+        },
+        toneOfVoice: {
+          name: 'Tom de voz',
+          value: '',
+          isEditing: false,
+          apiField: 'tone_of_voice',
+          isTextArea: true
+        },
+        monitoredAccounts: {
+          name: 'Contas monitoradas',
+          value: '',
+          isEditing: false,
+          apiField: 'monitored_accounts',
+          isArray: true
         },
       });
     } catch (err) {
@@ -215,9 +246,21 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     setExpandedSection(expandedSection === section ? null : section);
   };
 
+  const toggleSystemSection = () => {
+    setExpandedSystemSection(!expandedSystemSection);
+  };
+
   const renderField = (fieldKey: string, multiline: boolean = false) => {
     const field = fields[fieldKey];
     const validationError = validationErrors[fieldKey];
+    
+    // Use textarea for fields marked as textarea or multiline
+    const shouldUseTextArea = field.isTextArea || multiline;
+    
+    // For array fields, show as comma-separated values
+    const displayValue = field.isArray && field.value 
+      ? field.value.split(',').map(item => item.trim()).join(', ')
+      : field.value;
     
     return (
       <div className="flex items-start justify-between py-2">
@@ -225,20 +268,22 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           <div className="text-sm text-gray-400">{field.name}</div>
           {field.isEditing ? (
             <div className="space-y-2">
-              {multiline ? (
+              {shouldUseTextArea ? (
                 <textarea
-                  value={field.value}
+                  value={displayValue}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
                   className="w-full bg-transparent text-black focus:outline-none resize-none mt-1"
-                  rows={4}
+                  rows={field.isTextArea ? 6 : 4}
+                  placeholder={field.isArray ? 'Digite as contas separadas por vírgula' : ''}
                   autoFocus
                 />
               ) : (
                 <input
                   type="text"
-                  value={field.value}
+                  value={displayValue}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
                   className="w-full bg-transparent text-black focus:outline-none mt-1"
+                  placeholder={field.isArray ? 'Digite as contas separadas por vírgula' : ''}
                   autoFocus
                 />
               )}
@@ -248,7 +293,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
             </div>
           ) : (
             <div className="text-black mt-1">
-              {field.value || <span className="text-gray-500">Not set</span>}
+              {displayValue || <span className="text-gray-500">Não definido</span>}
             </div>
           )}
         </div>
@@ -303,7 +348,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
-          <h1 className="text-xl font-semibold ml-4">Settings</h1>
+          <h1 className="text-xl font-semibold ml-4">Configurações</h1>
         </div>
 
         {/* Purchase Popup */}
@@ -315,21 +360,21 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               exit={{ opacity: 0, y: -20 }}
               className="fixed top-4 right-4 bg-gray-900 text-black px-6 py-4 rounded-lg shadow-lg z-50"
             >
-              You'll be able to purchase it soon...
+              Você poderá comprar em breve...
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Niche Section */}
         <section className="mb-8">
-          <h3 className="text-sm font-medium text-gray-600 mb-1">Spying Niche</h3>
+          <h3 className="text-sm font-medium text-gray-600 mb-1">Nicho de Espionagem</h3>
           <div className="relative">
             <button
               onClick={() => setIsNicheDropdownOpen(!isNicheDropdownOpen)}
               className="w-full flex items-start justify-between bg-transparent py-2"
             >
               <div>
-                <h1 className="text-2xl font-bold">{selectedNiche || 'Select a niche'}</h1>
+                <h1 className="text-2xl font-bold">{selectedNiche || 'Selecione um nicho'}</h1>
               </div>
               <ChevronDown className={`w-5 h-5 transition-transform ${isNicheDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -349,7 +394,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                         type="text"
                         value={nicheSearch}
                         onChange={(e) => setNicheSearch(e.target.value)}
-                        placeholder="Search niches..."
+                        placeholder="Buscar nichos..."
                         className="w-full bg-gray-100 text-gray-900 pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
                       />
                       <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-500" />
@@ -386,7 +431,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                       >
                         <div className="flex items-center">
                           <Plus className="w-4 h-4 text-gray-700 mr-2" />
-                          <span className="text-gray-900">Create New Niche</span>
+                          <span className="text-black">Criar Novo Nicho</span>
                         </div>
                         <span className="text-sm font-medium text-gray-900">$7</span>
                       </button>
@@ -398,13 +443,44 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           </div>
         </section>
 
+        {/* System Settings Section */}
+        <div className="border-t border-gray-200">
+          <button
+            onClick={toggleSystemSection}
+            className="w-full py-4 flex items-center justify-between text-left"
+          >
+            <span className="text-lg font-semibold">Configurações do Sistema</span>
+            <ChevronDown
+              className={`w-5 h-5 text-gray-600 transition-transform ${
+                expandedSystemSection ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {expandedSystemSection && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-4 pb-4">
+                  {renderField('toneOfVoice', true)}
+                  {renderField('monitoredAccounts')}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
         {/* Business Info Section */}
         <div className="border-t border-gray-200">
           <button
             onClick={() => toggleSection('business')}
             className="w-full py-4 flex items-center justify-between text-left"
           >
-            <span className="text-lg font-semibold">Business Info</span>
+            <span className="text-lg font-semibold">Informações da Empresa</span>
             <ChevronDown
               className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSection === 'business' ? 'rotate-180' : ''
@@ -436,7 +512,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
             onClick={() => toggleSection('personal')}
             className="w-full py-4 flex items-center justify-between text-left"
           >
-            <span className="text-lg font-semibold">Personal Info</span>
+            <span className="text-lg font-semibold">Informações Pessoais</span>
             <ChevronDown
               className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSection === 'personal' ? 'rotate-180' : ''
@@ -454,7 +530,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               >
                 <div className="space-y-3 pb-4">
                   <div className="py-2">
-                    <div className="text-sm text-gray-600">Name</div>
+                    <div className="text-sm text-gray-600">Nome</div>
                     <div className="text-gray-900 mt-1">{userSettings?.name}</div>
                   </div>
                   <div className="py-2">
@@ -466,7 +542,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                     className="w-full flex items-center py-2 text-red-500"
                   >
                     <LogOut className="w-5 h-5 mr-2" />
-                    <span>Log out</span>
+                    <span>Sair</span>
                   </button>
                 </div>
               </motion.div>
