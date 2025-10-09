@@ -597,6 +597,40 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           </div>
         </section>
 
+        {/* System Settings Section */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Configurações do Sistema</h3>
+          <button
+            onClick={toggleSystemSection}
+            className="w-full py-2 flex items-center justify-between text-left hover:bg-gray-50 rounded-lg px-2 transition-colors"
+          >
+            <span className="text-base font-medium text-gray-900">Configurações Avançadas</span>
+            <ChevronDown
+              className={`w-5 h-5 text-gray-600 transition-transform ${
+                expandedSystemSection ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {expandedSystemSection && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden mt-4"
+              >
+                <div className="space-y-6 border-t border-gray-100 pt-4">
+                  {renderField('toneOfVoice', true)}
+                  <div className="border-t border-gray-100 pt-4">
+                  {renderField('monitoredAccounts')}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
         {/* Current Plan Section */}
         <section className="mb-8">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -656,40 +690,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
             </div>
           </div>
         </section>
-
-        {/* System Settings Section */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Configurações do Sistema</h3>
-          <button
-            onClick={toggleSystemSection}
-            className="w-full py-2 flex items-center justify-between text-left hover:bg-gray-50 rounded-lg px-2 transition-colors"
-          >
-            <span className="text-base font-medium text-gray-900">Configurações Avançadas</span>
-            <ChevronDown
-              className={`w-5 h-5 text-gray-600 transition-transform ${
-                expandedSystemSection ? 'rotate-180' : ''
-              }`}
-            />
-          </button>
-          <AnimatePresence>
-            {expandedSystemSection && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden mt-4"
-              >
-                <div className="space-y-6 border-t border-gray-100 pt-4">
-                  {renderField('toneOfVoice', true)}
-                  <div className="border-t border-gray-100 pt-4">
-                  {renderField('monitoredAccounts')}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
 
         {/* Business Info Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
