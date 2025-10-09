@@ -597,6 +597,66 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           </div>
         </section>
 
+        {/* Current Plan Section */}
+        <section className="mb-8">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">Plano Atual</h3>
+            <div className="grid gap-4 md:grid-cols-3">
+              {plans.map((plan) => (
+                <motion.div
+                  key={plan.id}
+                  className={`p-4 rounded-xl border-2 transition-all ${
+                    plan.current 
+                      ? 'border-gray-900 bg-gray-900 text-white' 
+                      : 'border-gray-200 bg-gray-50 hover:border-gray-300'
+                  }`}
+                  whileHover={plan.current ? {} : { scale: 1.02 }}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className={`font-semibold ${plan.current ? 'text-white' : 'text-gray-900'}`}>
+                      {plan.name}
+                    </h4>
+                    {plan.current && (
+                      <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-full">
+                        Atual
+                      </span>
+                    )}
+                  </div>
+                  <div className="mb-4">
+                    <span className={`text-2xl font-bold ${plan.current ? 'text-white' : 'text-gray-900'}`}>
+                      ${plan.price}
+                    </span>
+                    <span className={`text-sm ${plan.current ? 'text-gray-300' : 'text-gray-500'}`}>
+                      /mês
+                    </span>
+                  </div>
+                  <ul className="space-y-2 mb-4">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className={`text-sm flex items-start ${
+                        plan.current ? 'text-gray-300' : 'text-gray-600'
+                      }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-current mt-2 mr-2 flex-shrink-0"></span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  {!plan.current && (
+                    <button
+                      onClick={() => {
+                        setShowPurchasePopup(true);
+                        setTimeout(() => setShowPurchasePopup(false), 3000);
+                      }}
+                      className="w-full py-2 px-4 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+                    >
+                      Fazer Upgrade
+                    </button>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* System Settings Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Configurações do Sistema</h3>
