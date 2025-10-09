@@ -113,7 +113,7 @@ const Feed: React.FC<FeedProps> = ({ posts, searchTerm, activeSort }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ backgroundColor: '#F5F5F7' }}>
       {filteredPosts.length > 0 ? (
         <div 
           ref={feedRef} 

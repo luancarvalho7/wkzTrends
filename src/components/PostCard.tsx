@@ -47,7 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, index }) => {
   };
 
   return (
-    <div className="relative w-full max-w-[300px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+    <div className="relative w-full max-w-[300px] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow" style={{ backgroundColor: '#F5F5F7' }}>
       <div className="px-4 py-3 flex items-center justify-between bg-white border-b border-gray-100">
         <div className="flex items-center space-x-4">
           <div className="flex items-center" style={{ color: 'rgb(255, 0, 0)' }}>

@@ -51,7 +51,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white text-black flex items-center justify-center p-4">
+      <div className="min-h-screen text-black flex items-center justify-center p-4" style={{ backgroundColor: '#F5F5F7' }}>
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 max-w-md">
           <p className="text-red-700">{error}</p>
           <button
@@ -66,7 +66,7 @@ const MainContent: React.FC<MainContentProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-white pb-20 md:pb-0 md:pl-16">
+    <div className="min-h-screen pb-20 md:pb-0 md:pl-16" style={{ backgroundColor: '#F5F5F7' }}>
       <LoadingBar isLoading={isLoading} />
       {currentPage === 'feed' && (
         <>

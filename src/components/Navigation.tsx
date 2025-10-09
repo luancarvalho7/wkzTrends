@@ -12,7 +12,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
     <>
       {/* Mobile Bottom Navigation */}
       <motion.nav 
-        className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-200 z-50 md:hidden"
+        className="fixed bottom-0 left-0 right-0 border-t border-gray-200 z-50 md:hidden backdrop-blur-lg"
+        style={{ backgroundColor: 'rgba(245, 245, 247, 0.95)' }}
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3 }}
@@ -43,7 +44,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
 
       {/* Desktop Sidebar */}
       <motion.nav
-        className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 bg-white/95 backdrop-blur-lg border-r border-gray-200 z-50 flex-col items-center py-8"
+        className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 backdrop-blur-lg border-r border-gray-200 z-50 flex-col items-center py-8"
+        style={{ backgroundColor: 'rgba(245, 245, 247, 0.95)' }}
         initial={{ x: -100 }}
         animate={{ x: 0 }}
         transition={{ duration: 0.3 }}

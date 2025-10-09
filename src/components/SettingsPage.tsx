@@ -268,7 +268,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
   if (isPageLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F5F5F7' }}>
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-gray-900"></div>
       </div>
     );
@@ -276,7 +276,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white text-gray-900 p-4">
+      <div className="min-h-screen text-black p-4" style={{ backgroundColor: '#F5F5F7' }}>
         <div className="container mx-auto">
           <div className="flex items-center mb-8">
             <button onClick={() => onPageChange('feed')} className="text-gray-900">
@@ -293,7 +293,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   }
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 pb-20">
+    <div className="min-h-screen text-black pb-20" style={{ backgroundColor: '#F5F5F7' }}>
       <div className="container mx-auto px-4">
         {/* Settings Header */}
         <div className="py-4 flex items-center">
@@ -341,6 +341,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                  style={{ backgroundColor: '#F5F5F7' }}
                 >
                   <div className="p-2">
                     <div className="relative mb-2">

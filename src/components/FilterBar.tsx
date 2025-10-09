@@ -52,6 +52,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className="absolute top-full left-0 right-0 mt-2 bg-white backdrop-blur-sm rounded-lg border border-gray-200 overflow-hidden z-50 shadow-lg"
+            style={{ backgroundColor: '#F5F5F7' }}
           >
             {sortOptions.map((option) => {
               const OptionIcon = option.icon;
