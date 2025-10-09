@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, ChevronRight, LogOut, Edit2, Check, ChevronDown, Search, Lock, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronRight, LogOut, CreditCard as Edit2, Check, ChevronDown, Search, Lock, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getUserSettings, updateUserSetting } from '../services/settings';
 import { UserSettings, Niche } from '../types/settings';
@@ -222,14 +222,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     return (
       <div className="flex items-start justify-between py-2">
         <div className="flex-1">
-          <div className="text-sm text-gray-600">{field.name}</div>
+          <div className="text-sm text-gray-400">{field.name}</div>
           {field.isEditing ? (
             <div className="space-y-2">
               {multiline ? (
                 <textarea
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-gray-900 focus:outline-none resize-none mt-1"
+                  className="w-full bg-transparent text-white focus:outline-none resize-none mt-1"
                   rows={4}
                   autoFocus
                 />
@@ -238,7 +238,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   type="text"
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-gray-900 focus:outline-none mt-1"
+                  className="w-full bg-transparent text-white focus:outline-none mt-1"
                   autoFocus
                 />
               )}
@@ -247,14 +247,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               )}
             </div>
           ) : (
-            <div className="text-gray-900 mt-1">
-              {field.value || <span className="text-gray-600">Not set</span>}
+            <div className="text-white mt-1">
+              {field.value || <span className="text-gray-500">Not set</span>}
             </div>
           )}
         </div>
         <button
           onClick={() => field.isEditing ? handleSaveField(fieldKey) : toggleEdit(fieldKey)}
-          className="ml-4 text-gray-600 hover:text-gray-900 transition-colors"
+          className="ml-4 text-gray-400 hover:text-white transition-colors"
         >
           {field.isEditing ? (
             <Check className="w-4 h-4" />
