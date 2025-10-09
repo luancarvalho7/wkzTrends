@@ -79,6 +79,30 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     },
   });
 
+  const plans = [
+    {
+      id: 'free',
+      name: 'Free',
+      price: 0,
+      features: ['1 Nicho gratuito', 'Feed básico', 'Suporte por email'],
+      current: true
+    },
+    {
+      id: 'pro',
+      name: 'Pro',
+      price: 19,
+      features: ['5 Nichos inclusos', 'IA avançada', 'Suporte prioritário', 'Exportar relatórios'],
+      current: false
+    },
+    {
+      id: 'premium',
+      name: 'Premium',
+      price: 39,
+      features: ['Nichos ilimitados', 'Análises personalizadas', 'Suporte 24/7', 'API Access'],
+      current: false
+    }
+  ];
+
   const loadUserSettings = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -385,17 +409,20 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 <textarea
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-black focus:outline-none resize-none mt-1"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent resize-none mt-1 overflow-hidden"
+                  style={{ minHeight: '80px', maxHeight: '120px' }}
                   rows={field.isTextArea ? 6 : 4}
                   autoFocus
+                  maxLength={500}
                 />
               ) : (
                 <input
                   type="text"
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-black focus:outline-none mt-1"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent mt-1"
                   autoFocus
+                  maxLength={100}
                 />
               )}
               {validationError && (
@@ -403,7 +430,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               )}
             </div>
           ) : (
-            <div className="text-black mt-1">
+            <div className="text-black mt-1 break-words max-w-full overflow-hidden">
               {field.value || <span className="text-gray-500">Não definido</span>}
             </div>
           )}
@@ -571,12 +598,13 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
         </section>
 
         {/* System Settings Section */}
-        <div className="border-t border-gray-200">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Configurações do Sistema</h3>
           <button
             onClick={toggleSystemSection}
-            className="w-full py-4 flex items-center justify-between text-left"
+            className="w-full py-2 flex items-center justify-between text-left hover:bg-gray-50 rounded-lg px-2 transition-colors"
           >
-            <span className="text-lg font-semibold">Configurações do Sistema</span>
+            <span className="text-base font-medium text-gray-900">Configurações Avançadas</span>
             <ChevronDown
               className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSystemSection ? 'rotate-180' : ''
@@ -590,11 +618,13 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="overflow-hidden"
+                className="overflow-hidden mt-4"
               >
-                <div className="space-y-4 pb-4">
+                <div className="space-y-6 border-t border-gray-100 pt-4">
                   {renderField('toneOfVoice', true)}
+                  <div className="border-t border-gray-100 pt-4">
                   {renderField('monitoredAccounts')}
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -602,12 +632,13 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
         </div>
 
         {/* Business Info Section */}
-        <div className="border-t border-gray-200">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Informações da Empresa</h3>
           <button
             onClick={() => toggleSection('business')}
-            className="w-full py-4 flex items-center justify-between text-left"
+            className="w-full py-2 flex items-center justify-between text-left hover:bg-gray-50 rounded-lg px-2 transition-colors"
           >
-            <span className="text-lg font-semibold">Informações da Empresa</span>
+            <span className="text-base font-medium text-gray-900">Dados da Empresa</span>
             <ChevronDown
               className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSection === 'business' ? 'rotate-180' : ''
@@ -621,12 +652,16 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="overflow-hidden"
+                className="overflow-hidden mt-4"
               >
-                <div className="space-y-4 pb-4">
+                <div className="space-y-6 border-t border-gray-100 pt-4">
                   {renderField('businessName')}
+                  <div className="border-t border-gray-100 pt-4">
                   {renderField('instagram')}
+                  </div>
+                  <div className="border-t border-gray-100 pt-4">
                   {renderField('website')}
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -634,12 +669,13 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
         </div>
 
         {/* Personal Info Section */}
-        <div className="border-t border-gray-200">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Informações Pessoais</h3>
           <button
             onClick={() => toggleSection('personal')}
-            className="w-full py-4 flex items-center justify-between text-left"
+            className="w-full py-2 flex items-center justify-between text-left hover:bg-gray-50 rounded-lg px-2 transition-colors"
           >
-            <span className="text-lg font-semibold">Informações Pessoais</span>
+            <span className="text-base font-medium text-gray-900">Dados Pessoais</span>
             <ChevronDown
               className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSection === 'personal' ? 'rotate-180' : ''
@@ -653,24 +689,28 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="overflow-hidden"
+                className="overflow-hidden mt-4"
               >
-                <div className="space-y-3 pb-4">
-                  <div className="py-2">
+                <div className="space-y-4 border-t border-gray-100 pt-4">
+                  <div className="py-3 border-b border-gray-100">
                     <div className="text-sm text-gray-600">Nome</div>
-                    <div className="text-gray-900 mt-1">{userSettings?.name}</div>
+                    <div className="text-gray-900 mt-1 font-medium break-words">{userSettings?.name}</div>
                   </div>
-                  <div className="py-2">
+                  <div className="py-3 border-b border-gray-100">
                     <div className="text-sm text-gray-600">Email</div>
-                    <div className="text-gray-900 mt-1">{userSettings?.email}</div>
+                    <div className="text-gray-900 mt-1 font-medium break-all">{userSettings?.email}</div>
                   </div>
-                  <button 
+                  <div className="pt-4">
+                  <motion.button 
                     onClick={handleLogout}
-                    className="w-full flex items-center py-2 text-red-500"
+                    className="w-full flex items-center justify-center py-3 px-4 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors font-medium"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <LogOut className="w-5 h-5 mr-2" />
                     <span>Sair</span>
-                  </button>
+                  </motion.button>
+                  </div>
                 </div>
               </motion.div>
             )}
