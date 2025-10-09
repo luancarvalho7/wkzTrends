@@ -17,7 +17,7 @@ const LoadingBar: React.FC<LoadingBarProps> = ({ isLoading }) => {
         left: 0,
         right: 0,
         height: '2px',
-        backgroundColor: '#fff',
+        backgroundColor: '#111827',
         transformOrigin: 'left',
         zIndex: 1000,
       }}

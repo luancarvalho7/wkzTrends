@@ -51,12 +51,12 @@ const MainContent: React.FC<MainContentProps> = ({
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-        <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 max-w-md">
+      <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 max-w-md">
           <p className="text-red-500">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 text-white bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
+            className="mt-4 text-white bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
           >
             Retry
           </button>
@@ -66,7 +66,7 @@ const MainContent: React.FC<MainContentProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-black pb-20 md:pb-0 md:pl-16">
+    <div className="min-h-screen bg-white pb-20 md:pb-0 md:pl-16">
       <LoadingBar isLoading={isLoading} />
       {currentPage === 'feed' && (
         <>

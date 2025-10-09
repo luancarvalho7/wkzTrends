@@ -9,7 +9,7 @@
 
 body {
   font-family: var(--font-sans);
-  @apply bg-gray-50 text-gray-900 antialiased;
+  @apply bg-white text-gray-900 antialiased;
   overscroll-behavior-y: contain;
 }
 

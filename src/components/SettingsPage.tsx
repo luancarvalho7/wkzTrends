@@ -222,14 +222,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     return (
       <div className="flex items-start justify-between py-2">
         <div className="flex-1">
-          <div className="text-sm text-gray-400">{field.name}</div>
+          <div className="text-sm text-gray-600">{field.name}</div>
           {field.isEditing ? (
             <div className="space-y-2">
               {multiline ? (
                 <textarea
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-white focus:outline-none resize-none mt-1"
+                  className="w-full bg-transparent text-gray-900 focus:outline-none resize-none mt-1 border-b border-gray-300 focus:border-gray-900"
                   rows={4}
                   autoFocus
                 />
@@ -238,7 +238,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   type="text"
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-white focus:outline-none mt-1"
+                  className="w-full bg-transparent text-gray-900 focus:outline-none mt-1 border-b border-gray-300 focus:border-gray-900"
                   autoFocus
                 />
               )}
@@ -247,14 +247,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               )}
             </div>
           ) : (
-            <div className="text-white mt-1">
-              {field.value || <span className="text-gray-500">Not set</span>}
+            <div className="text-gray-900 mt-1">
+              {field.value || <span className="text-gray-600">Not set</span>}
             </div>
           )}
         </div>
         <button
           onClick={() => field.isEditing ? handleSaveField(fieldKey) : toggleEdit(fieldKey)}
-          className="ml-4 text-gray-400 hover:text-white transition-colors"
+          className="ml-4 text-gray-600 hover:text-gray-900 transition-colors"
         >
           {field.isEditing ? (
             <Check className="w-4 h-4" />
@@ -293,12 +293,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pb-20">
+    <div className="min-h-screen bg-white text-gray-900 pb-20">
       <div className="container mx-auto px-4">
         {/* Settings Header */}
         <div className="py-4 flex items-center">
           <button 
-            className="text-white"
+            className="text-gray-900"
             onClick={() => onPageChange('feed')}
           >
             <ArrowLeft className="w-6 h-6" />
@@ -313,7 +313,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="fixed top-4 right-4 bg-white text-black px-6 py-4 rounded-lg shadow-lg z-50"
+              className="fixed top-4 right-4 bg-gray-900 text-white px-6 py-4 rounded-lg shadow-lg z-50"
             >
               You'll be able to purchase it soon...
             </motion.div>
@@ -322,7 +322,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
         {/* Niche Section */}
         <section className="mb-8">
-          <h3 className="text-sm font-medium text-gray-400 mb-1">Spying Niche</h3>
+          <h3 className="text-sm font-medium text-gray-600 mb-1">Spying Niche</h3>
           <div className="relative">
             <button
               onClick={() => setIsNicheDropdownOpen(!isNicheDropdownOpen)}
@@ -331,7 +331,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               <div>
                 <h1 className="text-2xl font-bold">{selectedNiche || 'Select a niche'}</h1>
               </div>
-              <ChevronDown className={`w-5 h-5 transition-transform ${isNicheDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             <AnimatePresence>
@@ -349,9 +348,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                         value={nicheSearch}
                         onChange={(e) => setNicheSearch(e.target.value)}
                         placeholder="Search niches..."
-                        className="w-full bg-gray-100 text-gray-900 pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+                        className="w-full bg-gray-50 text-gray-900 pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 border border-gray-200"
                       />
-                      <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
+                      <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-500" />
                     </div>
                     <div className="max-h-60 overflow-y-auto">
                       {filteredNiches.map((niche) => (
@@ -360,15 +359,15 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                           onClick={() => handleNicheSelect(niche)}
                           className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition-colors ${
                             currentNicheId === niche.id
-                              ? 'bg-gray-100 font-bold'
-                              : 'hover:bg-gray-50'
+                              ? 'bg-gray-200 font-bold'
+                              : 'hover:bg-gray-100'
                           }`}
                         >
                           <div className="flex items-center">
                             {niche.access ? (
-                              <Check className="w-4 h-4 text-gray-600 mr-2" />
+                              <Check className="w-4 h-4 text-green-600 mr-2" />
                             ) : (
-                              <Lock className="w-4 h-4 text-gray-400 mr-2" />
+                              <Lock className="w-4 h-4 text-gray-500 mr-2" />
                             )}
                             <span className="text-gray-900">{niche.name}</span>
                           </div>
@@ -381,10 +380,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                       {/* Create New Niche Button */}
                       <button
                         onClick={handleCreateNewNiche}
-                        className="w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition-colors hover:bg-gray-50 border-t border-gray-200"
+                        className="w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition-colors hover:bg-gray-100 border-t border-gray-200"
                       >
                         <div className="flex items-center">
-                          <Plus className="w-4 h-4 text-gray-600 mr-2" />
+                          <Plus className="w-4 h-4 text-gray-700 mr-2" />
                           <span className="text-gray-900">Create New Niche</span>
                         </div>
                         <span className="text-sm font-medium text-gray-900">$7</span>
@@ -398,14 +397,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
         </section>
 
         {/* Business Info Section */}
-        <div className="border-t border-white/10">
+        <div className="border-t border-gray-200">
           <button
             onClick={() => toggleSection('business')}
             className="w-full py-4 flex items-center justify-between text-left"
           >
             <span className="text-lg font-semibold">Business Info</span>
             <ChevronDown
-              className={`w-5 h-5 text-gray-400 transition-transform ${
+              className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSection === 'business' ? 'rotate-180' : ''
               }`}
             />
@@ -430,14 +429,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
         </div>
 
         {/* Personal Info Section */}
-        <div className="border-t border-white/10">
+        <div className="border-t border-gray-200">
           <button
             onClick={() => toggleSection('personal')}
             className="w-full py-4 flex items-center justify-between text-left"
           >
             <span className="text-lg font-semibold">Personal Info</span>
             <ChevronDown
-              className={`w-5 h-5 text-gray-400 transition-transform ${
+              className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSection === 'personal' ? 'rotate-180' : ''
               }`}
             />
@@ -453,12 +452,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               >
                 <div className="space-y-3 pb-4">
                   <div className="py-2">
-                    <div className="text-sm text-gray-400">Name</div>
-                    <div className="text-white mt-1">{userSettings?.name}</div>
+                    <div className="text-sm text-gray-600">Name</div>
+                    <div className="text-gray-900 mt-1">{userSettings?.name}</div>
                   </div>
                   <div className="py-2">
-                    <div className="text-sm text-gray-400">Email</div>
-                    <div className="text-white mt-1">{userSettings?.email}</div>
+                    <div className="text-sm text-gray-600">Email</div>
+                    <div className="text-gray-900 mt-1">{userSettings?.email}</div>
                   </div>
                   <button 
                     onClick={handleLogout}
