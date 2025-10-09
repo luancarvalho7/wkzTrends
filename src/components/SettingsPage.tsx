@@ -78,6 +78,13 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     },
   });
 
+  const tabs = [
+    { id: 'system' as const, label: 'Sistema' },
+    { id: 'plans' as const, label: 'Planos' },
+    { id: 'business' as const, label: 'Empresa' },
+    { id: 'personal' as const, label: 'Pessoal' }
+  ];
+
   const plans = [
     {
       id: 'free',
