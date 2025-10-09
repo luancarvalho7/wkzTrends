@@ -85,7 +85,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, index, onAIClick }) => {
         </button>
         <button
           onClick={onAIClick}
-          className="absolute top-3 left-3 z-50 bg-gradient-to-r from-purple-500 to-blue-500 text-white p-2 rounded-full shadow-lg hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-105"
+          className="absolute bottom-4 left-4 z-50 bg-gradient-to-r from-purple-500 to-blue-500 text-white p-2 rounded-full shadow-lg hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-105"
           title="AI Analysis"
         >
           <FileText className="w-4 h-4" />
