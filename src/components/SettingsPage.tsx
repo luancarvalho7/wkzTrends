@@ -34,8 +34,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   const [selectedNiche, setSelectedNiche] = useState('');
   const [currentNicheId, setCurrentNicheId] = useState<string>('');
   const [nicheSearch, setNicheSearch] = useState('');
-  const [expandedSection, setExpandedSection] = useState<'business' | 'personal' | null>(null);
-  const [expandedSystemSection, setExpandedSystemSection] = useState(false);
+  const [activeTab, setActiveTab] = useState<'system' | 'plans' | 'business' | 'personal'>('system');
   const [userSettings, setUserSettings] = useState<UserSettings | null>(null);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -320,13 +319,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
       });
   };
 
-  const toggleSection = (section: 'business' | 'personal') => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
-
-  const toggleSystemSection = () => {
-    setExpandedSystemSection(!expandedSystemSection);
-  };
 
   const renderField = (fieldKey: string, multiline: boolean = false) => {
     const field = fields[fieldKey];
