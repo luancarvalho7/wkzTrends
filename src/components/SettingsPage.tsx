@@ -375,7 +375,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                           {!niche.access && (
                             <span className="text-sm font-medium text-gray-900">${niche.price}</span>
                           )}
-                          <span className="text-black">{niche.name}</span>
+                        </button>
                       ))}
                       
                       {/* Create New Niche Button */}
@@ -386,9 +386,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                         <div className="flex items-center">
                           <Plus className="w-4 h-4 text-gray-700 mr-2" />
                           <span className="text-gray-900">Create New Niche</span>
-                        <span className="text-black">Create New Niche</span>
+                        </div>
                         <span className="text-sm font-medium text-gray-900">$7</span>
-                      <span className="text-sm font-medium text-black">$7</span>
+                      </button>
                     </div>
                   </div>
                 </motion.div>
