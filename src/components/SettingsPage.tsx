@@ -269,6 +269,32 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     localStorage.removeItem('user');
     window.location.href = '/login';
   };
+  
+  const addMonitoredAccount = () => {
+    const account = newAccount.trim();
+    if (account && monitoredAccounts.length < 3 && !monitoredAccounts.includes(account)) {
+      const updatedAccounts = [...monitoredAccounts, account];
+      setMonitoredAccounts(updatedAccounts);
+      setNewAccount('');
+      
+      // Save to backend immediately
+      updateUserSetting('monitored_accounts', JSON.stringify(updatedAccounts))
+        .catch(err => {
+          setError(err instanceof Error ? err.message : 'Failed to update monitored accounts');
+        });
+    }
+  };
+  
+  const removeMonitoredAccount = (index: number) => {
+    const updatedAccounts = monitoredAccounts.filter((_, i) => i !== index);
+    setMonitoredAccounts(updatedAccounts);
+    
+    // Save to backend immediately
+    updateUserSetting('monitored_accounts', JSON.stringify(updatedAccounts))
+      .catch(err => {
+        setError(err instanceof Error ? err.message : 'Failed to update monitored accounts');
+      });
+  };
 
   const toggleSection = (section: 'business' | 'personal') => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -282,13 +308,72 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     const field = fields[fieldKey];
     const validationError = validationErrors[fieldKey];
     
+    // Special handling for monitored accounts
+    if (fieldKey === 'monitoredAccounts') {
+      return (
+        <div className="py-2">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm text-gray-400">{field.name}</div>
+            <span className="text-xs text-gray-500">{monitoredAccounts.length}/3 contas</span>
+          </div>
+          
+          {/* List of monitored accounts */}
+          <div className="space-y-2 mb-3">
+            {monitoredAccounts.length === 0 ? (
+              <div className="text-gray-500 text-sm italic">Nenhuma conta adicionada</div>
+            ) : (
+              monitoredAccounts.map((account, index) => (
+                <div key={index} className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
+                  <span className="text-black">@{account}</span>
+                  <button
+                    onClick={() => removeMonitoredAccount(index)}
+                    className="text-red-500 hover:text-red-700 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+          
+          {/* Add new account input */}
+          {monitoredAccounts.length < 3 && (
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={newAccount}
+                onChange={(e) => setNewAccount(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addMonitoredAccount();
+                  }
+                }}
+                placeholder="Digite o nome da conta (sem @)"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                maxLength={30}
+              />
+              <button
+                onClick={addMonitoredAccount}
+                disabled={!newAccount.trim()}
+                className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+              >
+                Adicionar Conta
+              </button>
+            </div>
+          )}
+          
+          {monitoredAccounts.length >= 3 && (
+            <div className="text-xs text-gray-500 mt-2">
+              Limite máximo de 3 contas atingido
+            </div>
+          )}
+        </div>
+      );
+    }
+    
     // Use textarea for fields marked as textarea or multiline
     const shouldUseTextArea = field.isTextArea || multiline;
-    
-    // For array fields, show as comma-separated values
-    const displayValue = field.isArray && field.value 
-      ? field.value.split(',').map(item => item.trim()).join(', ')
-      : field.value;
     
     return (
       <div className="flex items-start justify-between py-2">
@@ -298,20 +383,18 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
             <div className="space-y-2">
               {shouldUseTextArea ? (
                 <textarea
-                  value={displayValue}
+                  value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
                   className="w-full bg-transparent text-black focus:outline-none resize-none mt-1"
                   rows={field.isTextArea ? 6 : 4}
-                  placeholder={field.isArray ? 'Digite as contas separadas por vírgula' : ''}
                   autoFocus
                 />
               ) : (
                 <input
                   type="text"
-                  value={displayValue}
+                  value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
                   className="w-full bg-transparent text-black focus:outline-none mt-1"
-                  placeholder={field.isArray ? 'Digite as contas separadas por vírgula' : ''}
                   autoFocus
                 />
               )}
@@ -321,7 +404,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
             </div>
           ) : (
             <div className="text-black mt-1">
-              {displayValue || <span className="text-gray-500">Não definido</span>}
+              {field.value || <span className="text-gray-500">Não definido</span>}
             </div>
           )}
         </div>
