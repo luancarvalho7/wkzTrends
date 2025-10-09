@@ -33,7 +33,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   return (
     <div className="relative">
       <motion.button
-        className="w-full flex items-center justify-between px-4 py-2 text-white rounded-full text-sm"
+        className="w-full flex items-center justify-between px-4 py-2 bg-gray-100 text-gray-900 rounded-full text-sm hover:bg-gray-200"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -51,7 +51,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-sm rounded-lg border border-white/10 overflow-hidden z-50"
+            className="absolute top-full left-0 right-0 mt-2 bg-white backdrop-blur-sm rounded-lg border border-gray-200 overflow-hidden z-50 shadow-lg"
           >
             {sortOptions.map((option) => {
               const OptionIcon = option.icon;
@@ -62,8 +62,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
                   key={option.value}
                   className={`w-full flex items-center px-4 py-3 text-sm transition-colors ${
                     isActive 
-                      ? 'bg-white text-black' 
-                      : 'text-white/70 hover:bg-white/10'
+                      ? 'bg-gray-900 text-white' 
+                      : 'text-gray-700 hover:bg-gray-100'
                   }`}
                   onClick={() => handleSelect(option.value as SortOption)}
                   whileTap={{ scale: 0.98 }}

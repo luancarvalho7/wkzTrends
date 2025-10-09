@@ -113,7 +113,7 @@ const Feed: React.FC<FeedProps> = ({ posts, searchTerm, activeSort }) => {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       {filteredPosts.length > 0 ? (
         <div 
           ref={feedRef} 
@@ -169,10 +169,10 @@ const Feed: React.FC<FeedProps> = ({ posts, searchTerm, activeSort }) => {
           )}
         </div>
       ) : (
-        <div className="container mx-auto px-4 py-6 flex flex-col items-center justify-center min-h-[60vh] text-white">
+        <div className="container mx-auto px-4 py-6 flex flex-col items-center justify-center min-h-[60vh] text-gray-900">
           
           <h2 className="text-2xl font-semibold mb-2">No posts found :(</h2>
-          <p className="text-gray-400 text-center max-w-md">
+          <p className="text-gray-600 text-center max-w-md">
             {searchTerm 
               ? `No posts match your search for "${searchTerm}".` 
               : `No posts match the selected filters.`}
