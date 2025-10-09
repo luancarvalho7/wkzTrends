@@ -12,7 +12,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
     <>
       {/* Mobile Bottom Navigation */}
       <motion.nav 
-        className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-gray-200 z-50 md:hidden"
+        className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 z-50 md:hidden"
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3 }}
@@ -21,7 +21,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <div className="flex items-center justify-around py-4">
             <button 
               className={`flex flex-col items-center transition-colors ${
-                currentPage === 'feed' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-800'
+                currentPage === 'feed' ? 'text-white' : 'text-white/60 hover:text-white/90'
               }`}
               onClick={() => onPageChange('feed')}
             >
@@ -30,7 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
             </button>
             <button 
               className={`flex flex-col items-center transition-colors ${
-                currentPage === 'settings' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-800'
+                currentPage === 'settings' ? 'text-white' : 'text-white/60 hover:text-white/90'
               }`}
               onClick={() => onPageChange('settings')}
             >
@@ -43,7 +43,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
 
       {/* Desktop Sidebar */}
       <motion.nav
-        className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 bg-white/90 backdrop-blur-lg border-r border-gray-200 z-50 flex-col items-center py-8"
+        className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 bg-black/90 backdrop-blur-lg border-r border-white/10 z-50 flex-col items-center py-8"
         initial={{ x: -100 }}
         animate={{ x: 0 }}
         transition={{ duration: 0.3 }}
@@ -52,8 +52,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <button 
             className={`p-3 rounded-lg transition-colors ${
               currentPage === 'feed' 
-                ? 'bg-gray-200 text-gray-900' 
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                ? 'bg-white/10 text-white' 
+                : 'text-white/60 hover:text-white/90 hover:bg-white/5'
             }`}
             onClick={() => onPageChange('feed')}
           >
@@ -62,8 +62,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <button 
             className={`p-3 rounded-lg transition-colors ${
               currentPage === 'settings' 
-                ? 'bg-gray-200 text-gray-900' 
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                ? 'bg-white/10 text-white' 
+                : 'text-white/60 hover:text-white/90 hover:bg-white/5'
             }`}
             onClick={() => onPageChange('settings')}
           >
