@@ -21,7 +21,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <div className="flex items-center justify-around py-4">
             <button 
               className={`flex flex-col items-center transition-colors ${
-                currentPage === 'feed' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-800'
+                currentPage === 'feed' ? 'text-black' : 'text-gray-600 hover:text-black'
               }`}
               onClick={() => onPageChange('feed')}
             >
@@ -30,7 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
             </button>
             <button 
               className={`flex flex-col items-center transition-colors ${
-                currentPage === 'settings' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-800'
+                currentPage === 'settings' ? 'text-black' : 'text-gray-600 hover:text-black'
               }`}
               onClick={() => onPageChange('settings')}
             >
@@ -52,8 +52,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <button 
             className={`p-3 rounded-lg transition-colors ${
               currentPage === 'feed' 
-                ? 'bg-gray-900 text-white' 
-                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                ? 'bg-black text-white' 
+                : 'text-gray-600 hover:text-black hover:bg-gray-100'
             }`}
             onClick={() => onPageChange('feed')}
           >
@@ -62,8 +62,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
           <button 
             className={`p-3 rounded-lg transition-colors ${
               currentPage === 'settings' 
-                ? 'bg-gray-900 text-white' 
-                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                ? 'bg-black text-white' 
+                : 'text-gray-600 hover:text-black hover:bg-gray-100'
             }`}
             onClick={() => onPageChange('settings')}
           >

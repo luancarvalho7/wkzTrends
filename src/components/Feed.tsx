@@ -169,7 +169,7 @@ const Feed: React.FC<FeedProps> = ({ posts, searchTerm, activeSort }) => {
           )}
         </div>
       ) : (
-        <div className="container mx-auto px-4 py-6 flex flex-col items-center justify-center min-h-[60vh] text-gray-900">
+        <div className="container mx-auto px-4 py-6 flex flex-col items-center justify-center min-h-[60vh] text-black">
           
           <h2 className="text-2xl font-semibold mb-2">No posts found :(</h2>
           <p className="text-gray-600 text-center max-w-md">

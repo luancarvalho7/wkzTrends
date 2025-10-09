@@ -33,7 +33,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   return (
     <div className="relative">
       <motion.button
-        className="w-full flex items-center justify-between px-4 py-2 bg-gray-100 text-gray-900 rounded-full text-sm hover:bg-gray-200"
+        className="w-full flex items-center justify-between px-4 py-2 bg-gray-100 text-black rounded-full text-sm hover:bg-gray-200"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -62,8 +62,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
                   key={option.value}
                   className={`w-full flex items-center px-4 py-3 text-sm transition-colors ${
                     isActive 
-                      ? 'bg-gray-900 text-white' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'bg-black text-white' 
+                      : 'text-black hover:bg-gray-100'
                   }`}
                   onClick={() => handleSelect(option.value as SortOption)}
                   whileTap={{ scale: 0.98 }}

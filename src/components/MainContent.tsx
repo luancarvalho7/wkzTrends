@@ -51,7 +51,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white text-black flex items-center justify-center p-4">
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 max-w-md">
           <p className="text-red-700">{error}</p>
           <button
