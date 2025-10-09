@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, ChevronRight, LogOut, CreditCard as Edit2, Check, ChevronDown, Search, Lock, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronRight, LogOut, Pencil, Check, ChevronDown, Search, Lock, Plus, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getUserSettings, updateUserSetting } from '../services/settings';
 import { UserSettings, Niche } from '../types/settings';
@@ -41,6 +41,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   const [error, setError] = useState<string | null>(null);
   const [showPurchasePopup, setShowPurchasePopup] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [monitoredAccounts, setMonitoredAccounts] = useState<string[]>([]);
+  const [newAccount, setNewAccount] = useState('');
   const [fields, setFields] = useState<Record<string, EditableField>>({
     businessName: { 
       name: 'Nome da Empresa', 
@@ -70,7 +72,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     },
     monitoredAccounts: {
       name: 'Contas monitoradas',
-      value: '',
+      value: '[]',
       isEditing: false,
       apiField: 'monitored_accounts',
       isArray: true
@@ -113,19 +115,31 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
         },
         toneOfVoice: {
           name: 'Tom de voz',
-          value: '',
+          value: settings.tone_of_voice || '',
           isEditing: false,
           apiField: 'tone_of_voice',
           isTextArea: true
         },
         monitoredAccounts: {
           name: 'Contas monitoradas',
-          value: '',
+          value: '[]',
           isEditing: false,
           apiField: 'monitored_accounts',
           isArray: true
         },
       });
+      
+      // Initialize monitored accounts from settings
+      if (settings.monitored_accounts) {
+        try {
+          const accounts = typeof settings.monitored_accounts === 'string' 
+            ? JSON.parse(settings.monitored_accounts)
+            : settings.monitored_accounts;
+          setMonitoredAccounts(Array.isArray(accounts) ? accounts : []);
+        } catch {
+          setMonitoredAccounts([]);
+        }
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load settings');
     } finally {
@@ -161,6 +175,20 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
   const handleSaveField = async (fieldKey: string) => {
     const field = fields[fieldKey];
+    
+    // Special handling for monitored accounts
+    if (fieldKey === 'monitoredAccounts') {
+      setIsLoading(true);
+      try {
+        await updateUserSetting(field.apiField, JSON.stringify(monitoredAccounts));
+        toggleEdit(fieldKey);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to update setting');
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
     
     if (field.validate) {
       const error = field.validate(field.value);
@@ -304,7 +332,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
           {field.isEditing ? (
             <Check className="w-4 h-4" />
           ) : (
-            <Edit2 className="w-4 h-4" />
+            <Pencil className="w-4 h-4" />
           )}
         </button>
       </div>
