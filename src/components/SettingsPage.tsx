@@ -229,7 +229,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 <textarea
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-white focus:outline-none resize-none mt-1"
+                  className="w-full bg-transparent text-black focus:outline-none resize-none mt-1"
                   rows={4}
                   autoFocus
                 />
@@ -238,7 +238,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   type="text"
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-transparent text-white focus:outline-none mt-1"
+                  className="w-full bg-transparent text-black focus:outline-none mt-1"
                   autoFocus
                 />
               )}
@@ -247,14 +247,14 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
               )}
             </div>
           ) : (
-            <div className="text-white mt-1">
+            <div className="text-black mt-1">
               {field.value || <span className="text-gray-500">Not set</span>}
             </div>
           )}
         </div>
         <button
           onClick={() => field.isEditing ? handleSaveField(fieldKey) : toggleEdit(fieldKey)}
-          className="ml-4 text-gray-400 hover:text-white transition-colors"
+          className="ml-4 text-gray-400 hover:text-black transition-colors"
         >
           {field.isEditing ? (
             <Check className="w-4 h-4" />
@@ -276,10 +276,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white text-gray-900 p-4">
+      <div className="min-h-screen bg-white text-black p-4">
         <div className="container mx-auto">
           <div className="flex items-center mb-8">
-            <button onClick={() => onPageChange('feed')} className="text-gray-900">
+            <button onClick={() => onPageChange('feed')} className="text-black">
               <ArrowLeft className="w-6 h-6" />
             </button>
             <h1 className="text-xl font-semibold ml-4">Settings</h1>
@@ -293,12 +293,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
   }
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 pb-20">
+    <div className="min-h-screen bg-white text-black pb-20">
       <div className="container mx-auto px-4">
         {/* Settings Header */}
         <div className="py-4 flex items-center">
           <button 
-            className="text-gray-900"
+            className="text-black"
             onClick={() => onPageChange('feed')}
           >
             <ArrowLeft className="w-6 h-6" />
@@ -349,7 +349,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                         value={nicheSearch}
                         onChange={(e) => setNicheSearch(e.target.value)}
                         placeholder="Search niches..."
-                        className="w-full bg-gray-100 text-gray-900 pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+                        className="w-full bg-gray-100 text-black pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
                       />
                       <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-500" />
                     </div>
@@ -370,10 +370,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                             ) : (
                               <Lock className="w-4 h-4 text-gray-500 mr-2" />
                             )}
-                            <span className="text-gray-900">{niche.name}</span>
+                            <span className="text-black">{niche.name}</span>
                           </div>
                           {!niche.access && (
-                            <span className="text-sm font-medium text-gray-900">${niche.price}</span>
+                            <span className="text-sm font-medium text-black">${niche.price}</span>
                           )}
                         </button>
                       ))}
@@ -385,9 +385,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                       >
                         <div className="flex items-center">
                           <Plus className="w-4 h-4 text-gray-700 mr-2" />
-                          <span className="text-gray-900">Create New Niche</span>
+                          <span className="text-black">Create New Niche</span>
                         </div>
-                        <span className="text-sm font-medium text-gray-900">$7</span>
+                        <span className="text-sm font-medium text-black">$7</span>
                       </button>
                     </div>
                   </div>
@@ -454,11 +454,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 <div className="space-y-3 pb-4">
                   <div className="py-2">
                     <div className="text-sm text-gray-600">Name</div>
-                    <div className="text-gray-900 mt-1">{userSettings?.name}</div>
+                    <div className="text-black mt-1">{userSettings?.name}</div>
                   </div>
                   <div className="py-2">
                     <div className="text-sm text-gray-600">Email</div>
-                    <div className="text-gray-900 mt-1">{userSettings?.email}</div>
+                    <div className="text-black mt-1">{userSettings?.email}</div>
                   </div>
                   <button 
                     onClick={handleLogout}
