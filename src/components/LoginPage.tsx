@@ -1,5 +1,6 @@
 @@ .. @@
    return (
+   )
 -    <div className="min-h-screen bg-black flex items-center justify-center p-4">
 +    <div className="min-h-screen bg-white flex items-center justify-center p-4">
        <div className="w-full max-w-md">
@@ -15,6 +16,8 @@
  
 @@ .. @@
            {error && (
+)
+}
 -            <div className="bg-red-500/10 border border-red-500/50 text-red-500 rounded-lg p-4 text-sm">
 +            <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 text-sm">
                {error}
