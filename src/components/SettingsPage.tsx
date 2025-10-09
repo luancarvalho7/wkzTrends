@@ -311,44 +311,34 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     // Special handling for monitored accounts
     if (fieldKey === 'monitoredAccounts') {
       return (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="text-sm font-medium text-gray-700">{field.name}</div>
-            <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">{monitoredAccounts.length}/3</span>
+        <div className="py-2">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm text-gray-400">{field.name}</div>
+            <span className="text-xs text-gray-500">{monitoredAccounts.length}/3 contas</span>
           </div>
           
           {/* List of monitored accounts */}
-          <div className="space-y-2">
+          <div className="space-y-2 mb-3">
             {monitoredAccounts.length === 0 ? (
-              <div className="text-gray-400 text-sm italic bg-gray-50 rounded-xl p-4 text-center">
-                Nenhuma conta monitorada
-              </div>
+              <div className="text-gray-500 text-sm italic">Nenhuma conta adicionada</div>
             ) : (
               monitoredAccounts.map((account, index) => (
-                <motion.div 
-                  key={index} 
-                  className="flex items-center justify-between bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl px-4 py-3 border border-blue-100"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <span className="text-gray-800 font-medium">@{account}</span>
-                  <motion.button
+                <div key={index} className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
+                  <span className="text-black">@{account}</span>
+                  <button
                     onClick={() => removeMonitoredAccount(index)}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-100 p-1 rounded-full transition-all"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                    className="text-red-500 hover:text-red-700 transition-colors"
                   >
                     <X className="w-4 h-4" />
-                  </motion.button>
-                </motion.div>
+                  </button>
+                </div>
               ))
             )}
           </div>
           
           {/* Add new account input */}
           {monitoredAccounts.length < 3 && (
-            <div className="space-y-3">
+            <div className="space-y-2">
               <input
                 type="text"
                 value={newAccount}
@@ -360,23 +350,21 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   }
                 }}
                 placeholder="Digite o nome da conta (sem @)"
-                className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400"
                 maxLength={30}
               />
-              <motion.button
+              <button
                 onClick={addMonitoredAccount}
                 disabled={!newAccount.trim()}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
               >
                 Adicionar Conta
-              </motion.button>
+              </button>
             </div>
           )}
           
           {monitoredAccounts.length >= 3 && (
-            <div className="text-xs text-gray-500 text-center bg-amber-50 border border-amber-200 rounded-xl p-3">
+            <div className="text-xs text-gray-500 mt-2">
               Limite máximo de 3 contas atingido
             </div>
           )}
@@ -388,58 +376,48 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
     const shouldUseTextArea = field.isTextArea || multiline;
     
     return (
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="text-sm font-medium text-gray-700">{field.name}</div>
-          <motion.button
-            onClick={() => field.isEditing ? handleSaveField(fieldKey) : toggleEdit(fieldKey)}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            {field.isEditing ? (
-              <Check className="w-4 h-4 text-green-600" />
-            ) : (
-              <Pencil className="w-4 h-4 text-gray-500" />
-            )}
-          </motion.button>
-        </div>
+      <div className="flex items-start justify-between py-2">
         <div className="flex-1">
+          <div className="text-sm text-gray-400">{field.name}</div>
           {field.isEditing ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {shouldUseTextArea ? (
                 <textarea
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-all"
+                  className="w-full bg-transparent text-black focus:outline-none resize-none mt-1"
                   rows={field.isTextArea ? 6 : 4}
                   autoFocus
-                  placeholder={field.name}
                 />
               ) : (
                 <input
                   type="text"
                   value={field.value}
                   onChange={(e) => updateField(fieldKey, e.target.value)}
-                  className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="w-full bg-transparent text-black focus:outline-none mt-1"
                   autoFocus
-                  placeholder={field.name}
                 />
               )}
               {validationError && (
-                <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg p-2">{validationError}</p>
+                <p className="text-red-500 text-sm">{validationError}</p>
               )}
             </div>
           ) : (
-            <div className="bg-gray-50 rounded-xl p-4 border-2 border-transparent hover:border-gray-200 transition-all">
-              {field.value ? (
-                <div className="text-gray-900">{field.value}</div>
-              ) : (
-                <span className="text-gray-400 italic">Não definido</span>
-              )}
+            <div className="text-black mt-1">
+              {field.value || <span className="text-gray-500">Não definido</span>}
             </div>
           )}
         </div>
+        <button
+          onClick={() => field.isEditing ? handleSaveField(fieldKey) : toggleEdit(fieldKey)}
+          className="ml-4 text-gray-400 hover:text-black transition-colors"
+        >
+          {field.isEditing ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <Pencil className="w-4 h-4" />
+          )}
+        </button>
       </div>
     );
   };
@@ -527,109 +505,94 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${isNicheDropdownOpen ? 'rotate-180' : ''}`} />
               </motion.button>
 
-            <AnimatePresence>
-              {isNicheDropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg overflow-hidden z-50"
-                  style={{ backgroundColor: 'white' }}
-                >
-                  <div className="p-4">
-                    <div className="relative mb-4">
-                      <input
-                        type="text"
-                        value={nicheSearch}
-                        onChange={(e) => setNicheSearch(e.target.value)}
-                        placeholder="Buscar nichos..."
-                        className="w-full bg-gray-50 text-gray-900 pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white border border-gray-200"
-                      />
-                      <Search className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" />
-                    </div>
-                    <div className="max-h-60 overflow-y-auto space-y-1">
-                      {filteredNiches.map((niche) => (
-                        <motion.button
-                          key={niche.id}
-                          onClick={() => handleNicheSelect(niche)}
-                          className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between transition-all ${
-                            currentNicheId === niche.id
-                              ? 'bg-blue-50 border-2 border-blue-200 font-semibold'
-                              : 'hover:bg-gray-50 border border-transparent'
-                          }`}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
+              <AnimatePresence>
+                {isNicheDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                    style={{ backgroundColor: '#F5F5F7' }}
+                  >
+                    <div className="p-2">
+                      <div className="relative mb-2">
+                        <input
+                          type="text"
+                          value={nicheSearch}
+                          onChange={(e) => setNicheSearch(e.target.value)}
+                          placeholder="Buscar nichos..."
+                          className="w-full bg-gray-100 text-gray-900 pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+                        />
+                        <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-500" />
+                      </div>
+                      <div className="max-h-60 overflow-y-auto">
+                        {filteredNiches.map((niche) => (
+                          <button
+                            key={niche.id}
+                            onClick={() => handleNicheSelect(niche)}
+                            className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition-colors ${
+                              currentNicheId === niche.id
+                                ? 'bg-gray-100 font-bold'
+                                : 'hover:bg-gray-50'
+                            }`}
+                          >
+                            <div className="flex items-center">
+                              {niche.access ? (
+                                <Check className="w-4 h-4 text-green-600 mr-2" />
+                              ) : (
+                                <Lock className="w-4 h-4 text-gray-500 mr-2" />
+                              )}
+                              <span className="text-gray-900">{niche.name}</span>
+                            </div>
+                            {!niche.access && (
+                              <span className="text-sm font-medium text-gray-900">${niche.price}</span>
+                            )}
+                          </button>
+                        ))}
+                        
+                        {/* Create New Niche Button */}
+                        <button
+                          onClick={handleCreateNewNiche}
+                          className="w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition-colors hover:bg-gray-50 border-t border-gray-200"
                         >
                           <div className="flex items-center">
-                            {niche.access ? (
-                              <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                            ) : (
-                              <Lock className="w-4 h-4 text-gray-400 mr-3" />
-                            )}
-                            <div>
-                              <div className="text-gray-900 font-medium">{niche.name}</div>
-                              {!niche.access && <div className="text-xs text-gray-500">Premium</div>}
-                            </div>
+                            <Plus className="w-4 h-4 text-gray-700 mr-2" />
+                            <span className="text-black">Criar Novo Nicho</span>
                           </div>
-                          {!niche.access && (
-                            <span className="text-sm font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">${niche.price}</span>
-                          )}
-                        </motion.button>
-                      ))}
-                      
-                      {/* Create New Niche Button */}
-                      <motion.button
-                        onClick={handleCreateNewNiche}
-                        className="w-full text-left px-4 py-3 rounded-xl flex items-center justify-between transition-all hover:bg-gray-50 border-t border-gray-200 mt-2"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <div className="flex items-center">
-                          <Plus className="w-4 h-4 text-blue-600 mr-3" />
-                          <div>
-                            <div className="text-gray-900 font-medium">Criar Novo Nicho</div>
-                            <div className="text-xs text-gray-500">Personalizado para você</div>
-                          </div>
-                        </div>
-                        <span className="text-sm font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded-full">$7</span>
-                      </motion.button>
+                          <span className="text-sm font-medium text-gray-900">$7</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </section>
 
         {/* System Settings Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6">
-          <motion.button
+        <div className="border-t border-gray-200">
+          <button
             onClick={toggleSystemSection}
-            className="w-full p-6 flex items-center justify-between text-left hover:bg-gray-50 rounded-2xl transition-colors"
-            whileHover={{ scale: 1.005 }}
-            whileTap={{ scale: 0.995 }}
+            className="w-full py-4 flex items-center justify-between text-left"
           >
-            <div>
-              <span className="text-lg font-semibold text-gray-900">Configurações do Sistema</span>
-              <p className="text-sm text-gray-500 mt-1">Tom de voz e contas monitoradas</p>
-            </div>
+            <span className="text-lg font-semibold">Configurações do Sistema</span>
             <ChevronDown
-              className={`w-5 h-5 text-gray-400 transition-transform ${
+              className={`w-5 h-5 text-gray-600 transition-transform ${
                 expandedSystemSection ? 'rotate-180' : ''
               }`}
             />
-          </motion.button>
+          </button>
           <AnimatePresence>
             {expandedSystemSection && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="px-6 pb-6 space-y-6 border-t border-gray-100">
+                <div className="space-y-4 pb-4">
                   {renderField('toneOfVoice', true)}
                   {renderField('monitoredAccounts')}
                 </div>
