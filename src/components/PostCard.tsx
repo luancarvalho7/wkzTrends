@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Play, Trophy, Medal, Award, ExternalLink, Star } from 'lucide-react';
+import { Heart, Play, Trophy, Medal, Award, ExternalLink, FileText } from 'lucide-react';
 import { Post } from '../types';
 import { formatNumber } from '../utils/formatters';
 
@@ -88,7 +88,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, index, onAIClick }) => {
           className="absolute top-3 left-3 z-50 bg-gradient-to-r from-purple-500 to-blue-500 text-white p-2 rounded-full shadow-lg hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-105"
           title="AI Analysis"
         >
-          <Star className="w-4 h-4 fill-white" />
+          <FileText className="w-4 h-4" />
         </button>
         <div className="absolute bottom-4 right-4 z-50 bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm flex items-center space-x-2">
           {getRankIcon(index)}
