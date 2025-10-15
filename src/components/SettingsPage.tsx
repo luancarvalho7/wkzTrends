@@ -87,24 +87,24 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
   const plans = [
     {
-      id: 'free',
-      name: 'Free',
-      price: 0,
-      features: ['1 Nicho gratuito', 'Feed básico', 'Suporte por email'],
+      id: 'plan1',
+      name: 'Plano 1',
+      price: null,
+      features: ['3 perfis', '3 conteúdos/dia'],
       current: true
     },
     {
-      id: 'pro',
-      name: 'Pro',
-      price: 19,
-      features: ['5 Nichos inclusos', 'IA avançada', 'Suporte prioritário', 'Exportar relatórios'],
+      id: 'plan2',
+      name: 'Plano 2',
+      price: null,
+      features: ['5 perfis', '5 conteúdos/dia'],
       current: false
     },
     {
-      id: 'premium',
-      name: 'Premium',
-      price: 39,
-      features: ['Nichos ilimitados', 'Análises personalizadas', 'Suporte 24/7', 'API Access'],
+      id: 'plan3',
+      name: 'Plano 3',
+      price: null,
+      features: ['Ilimitado'],
       current: false
     }
   ];
@@ -552,55 +552,57 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-3">
                   {plans.map((plan) => (
                     <motion.div
                       key={plan.id}
-                      className={`p-4 rounded-xl border-2 transition-all ${
-                        plan.current 
-                          ? 'border-gray-900 bg-gray-900 text-white' 
-                          : 'border-gray-200 bg-gray-50 hover:border-gray-300'
+                      className={`relative p-6 rounded-2xl transition-all ${
+                        plan.current
+                          ? 'bg-gray-900 text-white shadow-lg'
+                          : 'bg-white border border-gray-200 hover:border-gray-300 hover:shadow-md'
                       }`}
-                      whileHover={plan.current ? {} : { scale: 1.02 }}
+                      whileHover={plan.current ? {} : { y: -4 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className={`font-semibold ${plan.current ? 'text-white' : 'text-gray-900'}`}>
+                      {plan.current && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <span className="text-xs bg-blue-500 text-white px-3 py-1 rounded-full font-medium shadow-md">
+                            Plano Atual
+                          </span>
+                        </div>
+                      )}
+                      <div className="text-center mb-6">
+                        <h4 className={`text-lg font-semibold mb-2 ${
+                          plan.current ? 'text-white' : 'text-gray-900'
+                        }`}>
                           {plan.name}
                         </h4>
-                        {plan.current && (
-                          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-full">
-                            Atual
-                          </span>
-                        )}
                       </div>
-                      <div className="mb-4">
-                        <span className={`text-2xl font-bold ${plan.current ? 'text-white' : 'text-gray-900'}`}>
-                          ${plan.price}
-                        </span>
-                        <span className={`text-sm ${plan.current ? 'text-gray-300' : 'text-gray-500'}`}>
-                          /mês
-                        </span>
-                      </div>
-                      <ul className="space-y-2 mb-4">
+                      <div className="space-y-3 mb-6">
                         {plan.features.map((feature, index) => (
-                          <li key={index} className={`text-sm flex items-start ${
-                            plan.current ? 'text-gray-300' : 'text-gray-600'
+                          <div key={index} className={`flex items-center justify-center text-base ${
+                            plan.current ? 'text-gray-100' : 'text-gray-700'
                           }`}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-current mt-2 mr-2 flex-shrink-0"></span>
-                            {feature}
-                          </li>
+                            <Check className="w-5 h-5 mr-2 flex-shrink-0" />
+                            <span className="font-medium">{feature}</span>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                       {!plan.current && (
                         <button
                           onClick={() => {
                             setShowPurchasePopup(true);
                             setTimeout(() => setShowPurchasePopup(false), 3000);
                           }}
-                          className="w-full py-2 px-4 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+                          className="w-full py-3 px-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all text-sm font-semibold shadow-sm hover:shadow-md"
                         >
-                          Fazer Upgrade
+                          Selecionar Plano
                         </button>
+                      )}
+                      {plan.current && (
+                        <div className="w-full py-3 px-4 bg-white/10 text-white rounded-xl text-sm font-semibold text-center">
+                          Plano Ativo
+                        </div>
                       )}
                     </motion.div>
                   ))}
