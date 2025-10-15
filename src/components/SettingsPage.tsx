@@ -87,25 +87,28 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
 
   const plans = [
     {
-      id: 'plan1',
-      name: 'Plano 1',
-      price: null,
+      id: 'basic',
+      name: 'Basic',
+      subtitle: 'Para começar',
       features: ['3 perfis', '3 conteúdos/dia'],
-      current: true
+      current: true,
+      highlighted: false
     },
     {
-      id: 'plan2',
-      name: 'Plano 2',
-      price: null,
+      id: 'pro',
+      name: 'Pro',
+      subtitle: 'Mais popular',
       features: ['5 perfis', '5 conteúdos/dia'],
-      current: false
+      current: false,
+      highlighted: true
     },
     {
-      id: 'plan3',
-      name: 'Plano 3',
-      price: null,
-      features: ['Ilimitado'],
-      current: false
+      id: 'unlimited',
+      name: 'Unlimited',
+      subtitle: 'Sem limites',
+      features: ['Perfis ilimitados', 'Conteúdos ilimitados'],
+      current: false,
+      highlighted: false
     }
   ];
 
@@ -556,53 +559,69 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onPageChange, setIsLoading 
                   {plans.map((plan) => (
                     <motion.div
                       key={plan.id}
-                      className={`relative p-6 rounded-2xl transition-all ${
-                        plan.current
-                          ? 'bg-gray-900 text-white shadow-lg'
-                          : 'bg-white border border-gray-200 hover:border-gray-300 hover:shadow-md'
+                      className={`relative p-8 rounded-3xl transition-all ${
+                        plan.highlighted
+                          ? 'bg-blue-600 text-white shadow-xl scale-105'
+                          : plan.current
+                          ? 'bg-gray-100 border-2 border-gray-900 shadow-md'
+                          : 'bg-white border-2 border-gray-200 hover:border-gray-300 shadow-sm'
                       }`}
-                      whileHover={plan.current ? {} : { y: -4 }}
+                      whileHover={plan.highlighted ? {} : { y: -4 }}
                       transition={{ duration: 0.2 }}
                     >
-                      {plan.current && (
+                      {plan.current && !plan.highlighted && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                          <span className="text-xs bg-blue-500 text-white px-3 py-1 rounded-full font-medium shadow-md">
+                          <span className="text-xs bg-gray-900 text-white px-3 py-1.5 rounded-full font-semibold shadow-md">
                             Plano Atual
                           </span>
                         </div>
                       )}
-                      <div className="text-center mb-6">
-                        <h4 className={`text-lg font-semibold mb-2 ${
-                          plan.current ? 'text-white' : 'text-gray-900'
+                      <div className="mb-6">
+                        <h4 className={`text-2xl font-bold mb-1 ${
+                          plan.highlighted ? 'text-white' : 'text-gray-900'
                         }`}>
                           {plan.name}
                         </h4>
+                        <p className={`text-sm ${
+                          plan.highlighted ? 'text-blue-100' : 'text-gray-500'
+                        }`}>
+                          {plan.subtitle}
+                        </p>
                       </div>
-                      <div className="space-y-3 mb-6">
+                      <div className="space-y-4 mb-8">
                         {plan.features.map((feature, index) => (
-                          <div key={index} className={`flex items-center justify-center text-base ${
-                            plan.current ? 'text-gray-100' : 'text-gray-700'
+                          <div key={index} className={`flex items-start text-sm ${
+                            plan.highlighted ? 'text-white' : 'text-gray-700'
                           }`}>
-                            <Check className="w-5 h-5 mr-2 flex-shrink-0" />
+                            <Check className={`w-5 h-5 mr-3 flex-shrink-0 mt-0.5 ${
+                              plan.highlighted ? 'text-blue-200' : 'text-blue-600'
+                            }`} />
                             <span className="font-medium">{feature}</span>
                           </div>
                         ))}
                       </div>
-                      {!plan.current && (
+                      {plan.current ? (
+                        <div className={`w-full py-3 px-4 rounded-xl text-sm font-semibold text-center ${
+                          plan.highlighted
+                            ? 'bg-white text-blue-600'
+                            : 'bg-gray-900 text-white'
+                        }`}>
+                          Plano Ativo
+                        </div>
+                      ) : (
                         <button
                           onClick={() => {
                             setShowPurchasePopup(true);
                             setTimeout(() => setShowPurchasePopup(false), 3000);
                           }}
-                          className="w-full py-3 px-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all text-sm font-semibold shadow-sm hover:shadow-md"
+                          className={`w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all ${
+                            plan.highlighted
+                              ? 'bg-white text-blue-600 hover:bg-blue-50'
+                              : 'bg-gray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-md'
+                          }`}
                         >
                           Selecionar Plano
                         </button>
-                      )}
-                      {plan.current && (
-                        <div className="w-full py-3 px-4 bg-white/10 text-white rounded-xl text-sm font-semibold text-center">
-                          Plano Ativo
-                        </div>
                       )}
                     </motion.div>
                   ))}
